@@ -1,10 +1,16 @@
+from accessify import private, protected
 class Point:
     def __init__(self, x=None, y=None):
-        self.__x = x
-        self.__y = y
+        if self.check_value(x) and self.check_value(y):
+            self.__x = x
+            self.__y = y
+
+    @classmethod
+    def check_value(cls, x):
+        return type(x) in (int, float)
 
     def set_coord(self, x, y):
-        if type(x) in (int, float) and type(y) in (int, float):
+        if self.check_value(x) and self.check_value(y):
             self.__x = x
             self.__y = y
         else:
@@ -15,7 +21,6 @@ class Point:
 
 
 pt = Point()
-print(pt.__dict__)
-print(Point.__dict__)
 pt.set_coord(10, 20)
 print(pt.get_coord())
+print(dir(pt))
